@@ -19,9 +19,10 @@ var game = {
 
     //tell game what to do based on the current level
     levelUp: function() {
+        //advance level display
         this.level+=1;
         $("#level").text(this.level);
-        //add a tile to sequence
+        //add a tile to sequence and
         this.boardSeq.push(this.randomNo());
         this.userSeq = this.boardSeq.slice(0);
         //play sequence user needs to repeat
@@ -45,8 +46,10 @@ var game = {
     //onclick = "recordClick('red')"
     //this function fires after the sequence is played for the user
     //it makes the board clickable to the player
-    player: function(a) {
-        this.userTurn=true;
+    boardCheck: function(a) {
+
+        this.userTurn;
+        //
         var correct = this.userSeq.shift();
         //record a click from the player
         var playerClick = $(a.target).data("tile");
@@ -61,12 +64,18 @@ var game = {
         }
     },
 
+    //deactivate board and set level back to 0
+    endGame: function() {
+        this.deactivateBoard();
+        $("level").text('0');
+    },
+
     // light tile by looking up data # add and remove lit class
     lightTile: function(tile) {
         var $tile = $("[data-tile=" + tile + "]").addClass('lit');
         window.setTimeout(function() {
             $tile.removeClass('lit');
-        }, 600);
+        }, 400);
     },
 
     //method to play a sound on cue with lightTile
@@ -83,11 +92,11 @@ var game = {
         var that = this;
         $('.board')
             .on('click', '[data-tile]', function(a) {
-                that.player(a);
+                that.boardCheck(a);
             })
             .on('mousedown', '[data-tile]', function() {
                 $(this).addClass('lit');
-                that.playSound($(this).data('tile'));
+                that.playSound($(this).data('tile'))
             })
             .on('mouseup', '[data-tile]', function() {
                 $(this).removeClass('lit');
@@ -108,11 +117,6 @@ var game = {
     //function to add random number between 0-3 to sequence. Needs to push a new value to array at beginning of level
     randomNo: function() {
         return Math.floor((Math.random() * 4));
-    },
-
-    //deactivate board and set level back to 0
-    endGame: function() {
-        $("level").text('0');
     }
 
 }
@@ -120,9 +124,5 @@ var game = {
 $(document).ready(function() {
     $("#start").click(function() {
         game.newGame();
-    });
-
-    $("#reset").click(function() {
-        game.endGame();
     });
 });
