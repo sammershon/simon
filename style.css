@@ -32,26 +32,26 @@ body {
     cursor: pointer;
 }
 
-#green {
+.green {
     border-top-left-radius: 300px;
     background-color: #27ae60;
 }
 
-#red {
+.red {
     float: left;
     border-top-right-radius: 300px;
     background-color: #c0392b;
     clear: right;
 }
 
-#yellow {
+.yellow {
     float: left;
     border-bottom-left-radius: 300px;
     background-color: #f39c12;
     clear: left;
 }
 
-#blue {
+.blue {
     float: left;
     border-bottom-right-radius: 300px;
     background-color: #2980b9;
