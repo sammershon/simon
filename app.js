@@ -5,6 +5,7 @@ var game = {
     boardSeq: [],
     userSeq: [],
     level: 0,
+    highScore: 0,
 
     //have document.ready activate this on click
     //start a new game @ level 1, score 0, and empty sequence arrays
@@ -95,6 +96,8 @@ var game = {
         $("#level").text('0');
         this.lightTileEnd();
         sad.play();
+        this.highScoreCheck();
+        console.log(this.highScore);
     },
 
     // light tile by looking up data # add and remove lit class
@@ -121,6 +124,13 @@ var game = {
         var soundArr = [g, r, b, y];
         soundArr[sound].play();
     },
+
+    highScoreCheck: function() {
+        if (this.level > this.highScore) {
+          this.highScore = this.level;
+          $("#highScore").text("High Score: " + this.highScore);
+        }
+    }
 }
 
 $(document).ready(function() {
