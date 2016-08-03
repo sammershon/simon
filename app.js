@@ -18,9 +18,8 @@ var game = {
 
     //tell game what to do based on the current level
     levelUp: function() {
-        //advance level var/display
-        this.userSeq = [];
-        this.level+=1;
+        //advance level var and display current level
+        this.level += 1;
         $("#level").text(this.level);
         this.boardSeq.push(Math.floor((Math.random() * 4)));
         this.userSeq = this.boardSeq.slice(0);
@@ -52,16 +51,16 @@ var game = {
         this.advance = (playerClick === correct);
         // userSeq arrayis empty when sequence has been correctly entered
         if (this.userSeq.length === 0 && this.advance) {
-          this.deactivateBoard();
-          this.levelUp();
-        //if user lost
+            this.deactivateBoard();
+            this.levelUp();
+            //if user lost
         } else if (!this.advance) {
-          this.deactivateBoard();
-          this.endGame();
+            this.deactivateBoard();
+            this.endGame();
         }
-      },
-      //make board clickable to user after sequence is played
-      //check board on user click
+    },
+    //make board clickable to user after sequence is played
+    //check board on user click
     activateBoard: function() {
         var that = this;
         $('.board')
@@ -91,13 +90,12 @@ var game = {
 
     //deactivate board and set level back to 0
     endGame: function() {
-      var sad = new Audio("fail.mp3");
+        var sad = new Audio("audio/fail.mp3");
         this.deactivateBoard();
         $("#level").text('0');
         this.lightTileEnd();
         sad.play();
         this.highScoreCheck();
-        console.log(this.highScore);
     },
 
     // light tile by looking up data # add and remove lit class
@@ -127,8 +125,8 @@ var game = {
 
     highScoreCheck: function() {
         if (this.level > this.highScore) {
-          this.highScore = this.level;
-          $("#highScore").text("High Score: " + this.highScore);
+            this.highScore = this.level;
+            $("#highScore").text("High Score: " + this.highScore);
         }
     }
 }
@@ -137,7 +135,7 @@ $(document).ready(function() {
     $("#start").click(function() {
         game.newGame();
     });
-    $("#reset").click(function(){
+    $("#reset").click(function() {
         game.endGame();
     });
 });
