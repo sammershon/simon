@@ -26,7 +26,7 @@ Play the game here:
 
 ##Wireframe
 
-![Wireframe](https://github.com/sammershon/simon/blob/master/img/simonWireframe.png)
+![Wireframe](https://github.com/sammershon/simon/blob/master/img/SimonWireFrame.png)
 
 ##Future Development
   * Add variable difficulty that changes the speed, sounds, or lighting pattern
