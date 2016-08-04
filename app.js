@@ -1,13 +1,12 @@
 "use strict";
-//The game object
-//contains info on game state and is a place to store
+//The game object contains info on game state and houses all the game's functions
 var game = {
     boardSeq: [],
     userSeq: [],
     level: 0,
     highScore: 0,
 
-    //have document.ready activate this on click
+    //document.ready activates this on start click
     //start a new game @ level 1, score 0, and empty sequence arrays
     newGame: function() {
         this.boardSeq = [];
@@ -18,10 +17,14 @@ var game = {
 
     //tell game what to do based on the current level
     levelUp: function() {
+        this.deactivateStart();
+        this.deactivateBoard();
         //advance level var and display current level
         this.level += 1;
         $("#level").text(this.level);
+        //add a random number 0-3 to boardSeq
         this.boardSeq.push(Math.floor((Math.random() * 4)));
+        //clone board array as userSeq
         this.userSeq = this.boardSeq.slice(0);
         this.playSequence(this.boardSeq);
     },
@@ -47,15 +50,11 @@ var game = {
         var correct = this.userSeq.shift();
         //record a click from the player
         var playerClick = $(a.target).data("tile");
-        //if the click doesn't match end game
-        this.advance = (playerClick === correct);
-        // userSeq arrayis empty when sequence has been correctly entered
-        if (this.userSeq.length === 0 && this.advance) {
-            this.deactivateBoard();
+        // userSeq array is empty when sequence has been correctly entered
+        if (this.userSeq.length === 0 && playerClick === correct) {
             this.levelUp();
-            //if user lost
-        } else if (!this.advance) {
-            this.deactivateBoard();
+        //if user lost
+        } else if (playerClick !== correct) {
             this.endGame();
         }
     },
@@ -91,11 +90,20 @@ var game = {
     //deactivate board and set level back to 0
     endGame: function() {
         var sad = new Audio("audio/fail.mp3");
-        this.deactivateBoard();
         $("#level").text('0');
+        this.deactivateBoard();
         this.lightTileEnd();
         sad.play();
         this.highScoreCheck();
+        this.activateStart();
+    },
+
+    deactivateStart: function() {
+        $('#start').prop('disabled', true);
+    },
+
+    activateStart: function() {
+        $('#start').prop('disabled', false);
     },
 
     // light tile by looking up data # add and remove lit class
